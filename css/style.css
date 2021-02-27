@@ -1,0 +1,113 @@
+body {
+	margin: 0px;
+}
+#paleta {
+	height: 60px;
+}
+#main {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	height: 560px;
+	overflow: hidden;
+	width: 75%;
+	min-width: 900px;
+	max-width: 1000px;
+}
+#main .left {
+	float: left;
+	width: 550px;
+}
+#main .right {
+	float: right;
+	height: 560px;
+	width: calc(900px - 550px);
+}
+#background {
+	background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow: auto;
+}
+svg path {
+	fill: #0094d9;
+}
+svg text {
+	fill: #fff;
+	font: 12px Arial-BoldMT, sans-serif;
+	cursor: pointer;
+}
+svg a {
+	text-decoration: none;
+	cursor: pointer;
+}
+svg .circle {
+	fill: #66ccff;
+}
+svg a path {
+	fill: #dbcc72;
+}
+text::selection {
+	background-color: transparent;
+}
+#menu {
+	text-align: center;
+	margin-top: 50px;
+}
+#menu button {
+	outline: none;
+	background-color: transparent;
+	color: white;
+	width: 250px;
+	height: 30px;
+	letter-spacing: 2px;
+	border: 1px solid #fff;
+	margin-bottom: 10px;
+	height: 40px;
+	font-variant: small-caps;
+	cursor: pointer;
+	transition: background-color 0.5s, color 0.5s;
+}
+#menu button:hover {
+	background-color: #fff;
+	color: #13547a;
+}
+#menu button[disabled] {
+	background-color: rgba(255, 255, 255, 0.1);
+	opacity: 0.5;
+	color: white;
+	cursor: default;
+}
+#menu button.selected {
+	cursor: default;
+	background-color: #fff;
+	color: #13547a;
+	/*outline: 2px solid #80d0c7;*/
+}
+#source {
+	text-align: center;
+	margin-top: 30px;
+}
+#source textarea {
+	padding: 20px;
+	background-color: #444;
+	color: #fff;
+	resize: none;
+	width: 260px;
+	overflow: hidden;
+	height: 400px;
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5);
+	border: none;
+	border-radius: 3px;
+	outline: none;
+	--tabsize: 4;
+	tab-size: var(--tabsize);
+	-o-tab-size: var(--tabsize);
+	-moz-tab-size: var(--tabsize);
+}
+#source textarea::selection {
+	background-color: rgba(0, 255, 192, 0.5);
+}

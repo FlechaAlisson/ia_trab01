@@ -50,9 +50,9 @@ $(document).ready(() => {
 		console.log("#selecionar_estado")
 	});
 	
-	$("#algoritmo_a").click(function() {
-		console.log("#algoritmo_a")
-	});
+	// $("#algoritmo_a").click(function() {
+	// 	console.log("#algoritmo_a")
+	// });
 	
 	$("#algoritmo_b").click(function() {
 		console.log("#algoritmo_b")
@@ -64,26 +64,44 @@ $(document).ready(() => {
 	
 	let algoritmo_a = false;
 	let first_time_algoritmo_a = true;
-	$("#algoritmo_a").click(function() {
-		console.log("#algoritmo_a")
-		algoritmo_a = !algoritmo_a;
-		if(first_time_algoritmo_a){
-			first_time_algoritmo_a = false;
-			$('#textarea').removeClass("display-none");
-		}
-		if(algoritmo_a){
-			$('#textarea').removeClass("m-fadeOut");
-			$('#textarea').addClass("m-fadeIn");
-			$('#buttons-div').addClass("display-none");
-		}else{
-			$('#textarea').removeClass("m-fadeIn");
-			$('#textarea').addClass("m-fadeOut");
-			$('#buttons-div').removeClass("display-none");
-		}
-	});
+	// $("#algoritmo_a").click(function() {
+	// 	console.log("#algoritmo_a")
+	// 	algoritmo_a = !algoritmo_a;
+	// 	if(first_time_algoritmo_a){
+	// 		first_time_algoritmo_a = false;
+	// 		$('#textarea').removeClass("display-none");
+	// 	}
+	// 	if(algoritmo_a){
+	// 		$('#textarea').removeClass("m-fadeOut");
+	// 		$('#textarea').addClass("m-fadeIn");
+	// 		$('#buttons-div').addClass("display-none");
+	// 	}else{
+	// 		$('#textarea').removeClass("m-fadeIn");
+	// 		$('#textarea').addClass("m-fadeOut");
+	// 		$('#buttons-div').removeClass("display-none");
+	// 	}
+	// });
+
+	$('body').on('click', '.alg', async function(e) {
+		const button = $(this)
+		const id = button.attr('id')
+		const letter = id.replace('algoritmo_', '')
+		const textarea = $('#textarea').removeClass('display-none').find('textarea')
+		const source = await $.get(`/algs/${letter}.txt`)
+		textarea.val(source)
+	})
 	
 	$("#direitos_autorais").click(function() {
 		console.log("#direitos_autorais")
+		// var win = window.open('http://stackoverflow.com/', '_blank');
+		var win = window.open('direitos_autorais.html', '_blank');
+		if (win) {
+		    //Browser has allowed it to be opened
+		    win.focus();
+		} else {
+		    //Browser has blocked it
+		    alert('Please allow popups for this website');
+		}
 	});
 
 })
