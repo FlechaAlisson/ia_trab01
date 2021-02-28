@@ -138,3 +138,11 @@ input[type="color"] {
 	border: none;
 	cursor: pointer;
 }
+
+
+.fa {
+	margin: 15px;
+}
+.fa-pause {
+	display: none;
+}

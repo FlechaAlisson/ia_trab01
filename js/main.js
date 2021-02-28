@@ -2,7 +2,7 @@
 import srcBlocks from "./srcBlocks.js"
 
 
-const fade_duration = 350
+const fade_duration = 0
 let colors = ["#fd9b70", "#84e2d2", "#ade09d", "#d08bec","#b6e600"];
 let defColor = '#dbcc72';
 let i = 0;
@@ -10,6 +10,9 @@ let lockedColor = '#aaa';
 let remover_estados = false;
 let mao_livre = false;
 let estado_inicial = false;
+let play = true;
+let pause = false;
+let name;
 window.colors = colors
 
 const loadMap = async () => {
@@ -96,7 +99,7 @@ $(document).ready(async () => {
 	// await showAlg("a")
 	$('body').on('click', '.alg', async function(e) {
 		const button = $(this)
-		const name = button.attr('alg-name')
+		name = button.attr('alg-name')
 		await showAlg(name)
 	})
 	$('body').on('click', '#sair', async function(e) {
@@ -145,6 +148,41 @@ $(document).ready(async () => {
 			$(".alg").prop("disabled", false);
 		}
 		estado_inicial = !estado_inicial;
+	});
+	$(".fa-play").click(function() {
+		if(!play){
+			$(this).addClass("selected");
+			$(".fa-pause").css("display", "none");
+			pause = false;
+			$(".fa-play").css("display", "inline");
+		}else{
+			$(this).removeClass("selected");
+			$(".fa-pause").css("display", "inline");
+			pause = true;
+			$(".fa-play").css("display", "none");
+		}
+		play = !play;
+	});
+	$(".fa-pause").click(function() {
+		if(!pause){
+			$(this).addClass("selected");
+			$(".fa-pause").css("display", "inline");
+			play = false
+			$(".fa-play").css("display", "none");
+		}else{
+			$(this).removeClass("selected");
+			$(".fa-pause").css("display", "none");
+			play = true
+			$(".fa-play").css("display", "inline");
+		}
+		pause = !pause;
+	});
+	$(".fa-home").click(function() {
+		pause = false;
+		play = true;
+		$(".fa-play").css("display", "inline");
+		$(".fa-pause").css("display", "none");
+		quitAlg(name)
 	});
 
 	// $('body').on('click', 'a', function() {
