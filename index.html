@@ -6,29 +6,36 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script type="module" src="js/main.js"></script>
+		<style type="text/css" id="colors"></style>
 	</head>
 	<body>
 		<div id="background">
-			<div id="paleta"></div>
 			<div id="main">
 				<div class="left">
 					<div id="map"></div>
 				</div>
 				<div class="right">
 					<div id="menu">
-						<button>paleta de cores</button>
-						<button>remover/adicionar estados</button>
-						<button>selecionar estado inicial</button>
+						<button id="mao_livre">mão livre</button>
+						<button id="remover_estados">remover/adicionar estados</button>
+						<button id="estado_inicial">selecionar estado inicial</button>
 						<button class="alg" alg-name="a">algoritmo a</button>
 						<button class="alg" alg-name="b">algoritmo b</button>
 						<button class="alg" alg-name="c">algoritmo c</button>
-						<button>mão livre</button>
-						<button>direitos autorais</button>
 					</div>
 					<div id="source" style="display:none;">
-						<textarea></textarea>
+						<form spellcheck="false">
+							<textarea></textarea>
+						</form>
+						<div id="source-menu">
+							<i class="fas fa-play"></i>
+							<i class="fas fa-pause"></i>
+							<i class="fas fa-forward"></i>
+							<i class="fas fa-home"></i>
+						</div>
 					</div>
 				</div>
+				<div id="color_bar"></div>
 			</div>
 		</div>
 	</body>

@@ -1,9 +1,6 @@
 body {
 	margin: 0px;
 }
-#paleta {
-	height: 60px;
-}
 #main {
 	margin-left: auto;
 	margin-right: auto;
@@ -110,4 +107,34 @@ text::selection {
 }
 #source textarea::selection {
 	background-color: rgba(0, 255, 192, 0.5);
+}
+
+#color_bar {
+	position: fixed;
+	top: 100px;
+	left: 30px;
+	width: 60px;
+	padding-top: 10px;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.1);
+	border: 1px solid #fff;
+}
+
+#color_bar > div {
+	display: inline-block;
+	margin-bottom: 10px;
+	transition: border-radius 0.15s, transform 0.15s;
+}
+
+#color_bar > div:hover {
+	transform: scale(1.2);
+	border-radius: 3px;
+}
+
+input[type="color"] {
+	width: 40px;
+	height: 40px;
+	padding: 0px;
+	border: none;
+	cursor: pointer;
 }

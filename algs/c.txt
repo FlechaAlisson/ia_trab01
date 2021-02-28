@@ -1,0 +1,9 @@
+
+int main(){
+	for(n=1;n < 10;n++){
+		if(vetor[i] % n == 0){
+			div++;
+		}
+	}
+	printf("%d", controle);
+}
