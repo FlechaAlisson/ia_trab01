@@ -1,57 +1,180 @@
-import List from './Lista.js'
 
 let border_list = {
-    AC:  new List("AC"),
-    AL:  new List("AL"),
-    AP:  new List("AP"),
-    AM:  new List("AM"),
-    BA:  new List("BA"),
-    CE:  new List("CE"),
-    DF:  new List("DF"),
-    ES:  new List("ES"),
-    GO:  new List("GO"),
-    MA:  new List("MA"),
-    MT:  new List("MT"),
-    MS:  new List("MS"),
-    MG:  new List("MG"),
-    PA:  new List("PA"),
-    CE:  new List("CE"),
-    PR:  new List("PR"),
-    PE:  new List("PE"),
-    RN:  new List("RN"),
-    RS:  new List("RS"),
-    RO:  new List("RO"),
-    RR:  new List("RR"),
-    SC:  new List("SC"),
-    SP:  new List("SP"),
-    SE:  new List("SE"),
-    TO:  new List("TO"),        
+  AC: {
+    name:"AC",
+    neighbors: ["AM", "RO"],
+    visited: false
+  },
+  AL: {
+    name:"AL",
+    neighbors: ["SE", "PE", "BA"],
+    visited: false
+  },
+  AP: {
+    name:"AP",
+    neighbors: ["PA"],
+    visited: false
+  },
+  AM: {
+    name:"AM",
+    neighbors: ["AC", "RO", "MT", "PA", "RR"],
+    visited: false
+  },
+  BA: {
+    name:"BA",
+    neighbors: ["GO", "PI", "PE", "SE", "GO", "AL"],
+    visited: false
+  },
+  CE: {
+    name:"CE",
+    neighbors: ["PB", "RN", "PI", "PE"],
+    visited: false
+  },
+  DF: {
+    name:"DF",
+    neighbors: ["GO", "MG"],
+    visited: false
+  },
+  ES: {
+    name:"ES",
+    neighbors: ["MG", "RJ", "BA"],
+    visited: false
+  },
+  GO: {
+    name:"GO",
+    neighbors: ["MT", "MS", "BA", "MG", "TO", "DF"],
+    visited: false
+  },
+  MA: {
+    name:"MA",
+    neighbors: ["PI", "TO", "PA"],
+    visited: false
+  },
+  MT: {
+    name:"MT",
+    neighbors: ["RO", "AM", "PA", "TO", "GO", "MS"],
+    visited: false
+  },
+  MS: {
+    name:"MS",
+    neighbors: ["MT", "GO", "SP", "PR", "MG"],
+    visited: false
+  },
+  MG: {
+    name:"MG",
+    neighbors: ["SP", "RJ", "ES", "BA", "DF", "GO", "MS"],
+    visited: false
+  },
+  PA: {
+    name:"PA",
+    neighbors: ["MA", "TO", "MT", "AM", "RR", "AP"],
+    visited: false
+  },
+  PR: {
+    name:"PR",
+    neighbors: ["SC", "RS", "SP", "MS"],
+    visited: false
+  },
+  PE: {
+    name:"PE",
+    neighbors: ["AL", "BA", "PI", "CE", "PB"],
+    visited: false
+  },
+  RN: {
+    name:"RN",
+    neighbors: ["CE", "PB"],
+    visited: false
+  },
+  RS: {
+    name:"RS",
+    neighbors: ["SC"],
+    visited: false
+  },
+  RO: {
+    name:"RO",
+    neighbors: ["MT", "AM", "AC"],
+    visited: false
+  },
+  RR: {
+    name:"RR",
+    neighbors: ["AM"],
+    visited: false
+  },
+  SC: {
+    name:"SC",
+    neighbors: ["PR", "RS"],
+    visited: false
+  },
+  SP: {
+    name:"SP",
+    neighbors: ["PR", "MS", "MG", "RJ"],
+    visited: false
+  },
+  SE: {
+    name:"SE",
+    neighbors: ["BA", "SE"],
+    visited: false
+  },
+  TO: {
+    name:"TO",
+    neighbors: ["PA", "MT", "GO", "BA", "PI", "MA"],
+    visited: false
+  },
+  PI: {
+    name:"PI",
+    neighbors: ["CE", "PE", "BA", "TO", "MA"],
+    visited: false
+  },
+  RJ: {
+    name:"RJ",
+    neighbors: ["ES", "MG", "SP"],
+    visited: false
+  },
+  PB: {
+    name:"PB",
+    neighbors: ["RN", "CE", "PE"],
+    visited: false
+  },
 }
-border_list.AC.pushArray(["AM","RO"])
-border_list.AL.pushArray(["SE","PE","BA"])
-border_list.AP.pushArray(["PA"])
-border_list.AM.pushArray(["AC","RO","MT","PA","RR"])
-border_list.BA.pushArray(["GO","PI","PE","SE","GO","AL"])
-border_list.CE.pushArray(["PE","RN","PA","PI"])
-border_list.DF.pushArray(["GO","MG"])
-border_list.ES.pushArray(["MG","RJ","BA"])
-border_list.GO.pushArray(["MT","MS","BA","MG","TO","DF"])
-border_list.MA.pushArray(["PI","TO","PA"])
-border_list.MT.pushArray(["RO","AM","PA","TO","GO","MS"])
-border_list.MS.pushArray(["MT","GO","SP","PR","MG"])
-border_list.MG.pushArray(["SP","RG","ES","BA","DF","GO","MS"])
-border_list.PA.pushArray(["MA","TO","MT","AM","RR","AP"])
-border_list.CE.pushArray(["PB","RN","PI"])
-border_list.PR.pushArray(["SC","RS","SP","MS"])
-border_list.PE.pushArray(["AL","BA","PI","CE","PB"])
-border_list.RN.pushArray(["CE","PB"])
-border_list.RS.pushArray(["SC"])
-border_list.RO.pushArray(["MT","AM","AC"])
-border_list.RR.pushArray(["AM"])
-border_list.SC.pushArray(["PR","RS"])
-border_list.SP.pushArray(["PR","MS","MG","RJ"])
-border_list.SE.pushArray(["BA","SE"])
-border_list.TO.pushArray(["PA","MT","GO","BA","PI","MA"])
-
 
 console.log(border_list)
+
+hill(border_list.AC)
+
+function percorre(state) {
+  console.log(state)
+  state.visited = true
+  state.neighbors.forEach(e => {
+    let aux = border_list[`${e}`]
+    console.log(aux)
+    if (aux.visited != true)
+      percorre(aux)
+  });
+}
+
+function hill(state) {
+  console.log("============")
+  if (state.visited != false)
+    return;
+  console.log("ESTADO ATUAL:",state)
+  state.visited = true
+  let vizinhos = []
+  state.neighbors.forEach(e => {
+    vizinhos.push(border_list[`${e}`])
+  })
+  //pega o vizinho com o menor numeros de vizinhos
+  
+  let next = vizinhos.reduce((prev, curr) => prev.Cost < curr.Cost ? prev : curr)
+  next.neighbors = next.neighbors.filter(function (value,index,arr) {
+    return value !== state.name
+  })
+  console.log("VIZINHOS FILTRADOS: ",next)
+  console.log("PROXIMO:", next)
+  
+  hill(next)
+
+}
+
+
+
+

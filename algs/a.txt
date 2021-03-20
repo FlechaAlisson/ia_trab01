@@ -1,21 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-int main(){
-    int i, vetor[10];
-    int div = 0;
-    int n;
-	int controle=0;
-	for(i=0;i < 10;i++){
-		scanf("%d", &vetor[i]);
+function buscaGulosa(estadoInicial, cores) {
+	coresPossiveis = cores;
+	forEach(estadoVizinho in estadoInicial){
+		coresPossiveis -= estadoVizinho.cor;		
+		estadoInicial.cor = random(coresPossiveis);
+		buscaGulosa(estadoVizinho, cores);
 	}
-	for(n=1;n < 10;n++){
-		if(vetor[i] % n == 0){
-			div++;
-		}
-		if(div == 2){
-			controle=controle+1;
-		}
-	}
-	printf("%d", controle);
-	return 0;
 }
