@@ -1,6 +1,6 @@
 
 import srcBlocks from "./srcBlocks.js"
-
+import {percorre} from '../old/js/estados.js'
 
 const fade_duration = 0
 let colors = ["#fd9b70", "#84e2d2", "#ade09d", "#d08bec","#b6e600"];
@@ -101,6 +101,7 @@ $(document).ready(async () => {
 		const button = $(this)
 		name = button.attr('alg-name')
 		await showAlg(name)
+		percorre('RS', "#AAA")
 	})
 	$('body').on('click', '#sair', async function(e) {
 		const button = $(this)
