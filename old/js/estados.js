@@ -1,141 +1,142 @@
-let colors = ["#fd9b70", "#84e2d2", "#ade09d", "#d08bec", "#b6e600"];
+const defColor = '#dbcc72';
 let border_list = {
   AC: {
     name: "AC",
     neighbors: ["AM", "RO"],
-    visited: false
+    color: undefined
   },
   AL: {
     name: "AL",
     neighbors: ["SE", "PE", "BA"],
-    visited: false
+    color: undefined
   },
   AP: {
     name: "AP",
     neighbors: ["PA"],
-    visited: false
+    color: undefined
   },
   AM: {
     name: "AM",
     neighbors: ["AC", "RO", "MT", "PA", "RR"],
-    visited: false
+    color: undefined
   },
   BA: {
     name: "BA",
     neighbors: ["GO", "PI", "PE", "SE", "GO", "AL"],
-    visited: false
+    color: undefined
   },
   CE: {
     name: "CE",
     neighbors: ["PB", "RN", "PI", "PE"],
-    visited: false
+    color: undefined
   },
   DF: {
     name: "DF",
     neighbors: ["GO", "MG"],
-    visited: false
+    color: undefined
   },
   ES: {
     name: "ES",
     neighbors: ["MG", "RJ", "BA"],
-    visited: false
+    color: undefined
   },
   GO: {
     name: "GO",
     neighbors: ["MT", "MS", "BA", "MG", "TO", "DF"],
-    visited: false
+    color: undefined
   },
   MA: {
     name: "MA",
     neighbors: ["PI", "TO", "PA"],
-    visited: false
+    color: undefined
   },
   MT: {
     name: "MT",
     neighbors: ["RO", "AM", "PA", "TO", "GO", "MS"],
-    visited: false
+    color: undefined
   },
   MS: {
     name: "MS",
     neighbors: ["MT", "GO", "SP", "PR", "MG"],
-    visited: false
+    color: undefined
   },
   MG: {
     name: "MG",
     neighbors: ["SP", "RJ", "ES", "BA", "DF", "GO", "MS"],
-    visited: false
+    color: undefined
   },
   PA: {
     name: "PA",
     neighbors: ["MA", "TO", "MT", "AM", "RR", "AP"],
-    visited: false
+    color: undefined
   },
   PR: {
     name: "PR",
     neighbors: ["SC", "SP", "MS"],
-    visited: false
+    color: undefined
   },
   PE: {
     name: "PE",
     neighbors: ["AL", "BA", "PI", "CE", "PB"],
-    visited: false
+    color: undefined
   },
   RN: {
     name: "RN",
     neighbors: ["CE", "PB"],
-    visited: false
+    color: undefined
   },
   RS: {
     name: "RS",
     neighbors: ["SC"],
-    visited: false
+    color: undefined
   },
   RO: {
     name: "RO",
     neighbors: ["MT", "AM", "AC"],
-    visited: false
+    color: undefined
   },
   RR: {
     name: "RR",
     neighbors: ["AM"],
-    visited: false
+    color: undefined
   },
   SC: {
     name: "SC",
     neighbors: ["PR", "RS"],
-    visited: false
+    color: undefined
   },
   SP: {
     name: "SP",
     neighbors: ["PR", "MS", "MG", "RJ"],
-    visited: false
+    color: undefined
   },
   SE: {
     name: "SE",
     neighbors: ["BA", "SE"],
-    visited: false
+    color: undefined
   },
   TO: {
     name: "TO",
     neighbors: ["PA", "MT", "GO", "BA", "PI", "MA"],
-    visited: false
+    color: undefined
   },
   PI: {
     name: "PI",
     neighbors: ["CE", "PE", "BA", "TO", "MA"],
-    visited: false
+    color: undefined
   },
   RJ: {
     name: "RJ",
     neighbors: ["ES", "MG", "SP"],
-    visited: false
+    color: undefined
   },
   PB: {
     name: "PB",
     neighbors: ["RN", "CE", "PE"],
-    visited: false
+    color: undefined
   },
 }
+
 
 
 function buscaEstado(nome) {
@@ -143,30 +144,55 @@ function buscaEstado(nome) {
 }
 
 function setColor(nome, cor) {
+  buscaEstado(nome).color = cor
   document.getElementById(nome)
-  .getElementsByTagName('path')[0]
-  .setAttribute('style', `fill: ${cor};`)
+    .getElementsByTagName('path')[0]
+    .setAttribute('style', `fill: ${cor};`)
 }
 
-function percorre(nome, cor) {
-  setTimeout(() => {
-    let state = buscaEstado(nome)
-    setColor(nome, cor)
-    state.visited = true
-    state.neighbors.forEach(e => {
-      let aux = border_list[`${e}`]
-      if (aux.visited != true)
-        percorre(aux.name, cor)
-    });
-  }, 500)
+
+function getCor(nome, cores) {
+  let coresRestantes = []
+  let state = buscaEstado(nome)
+  state.neighbors.forEach(e => {
+    let aux = border_list[`${e}`]
+    coresRestantes = cores.filter(c => {
+      return c != aux.color
+    })
+  });
+  return coresRestantes
+}
+
+function delay(ms) {
+  return new Promise((done) => setTimeout(done, ms));
+}
+
+function * percorre(nome, cores) {
+  //Busca a instância do Estado
+  const state = buscaEstado(nome)
+  //Busca as cores possíveis
+  const cor = getCor(nome, cores)
+  //seta a cor
+  setColor(nome, cor[0])
+  //Para todo vizinho, chama recursivamente
+
+  yield nome
+
+  for(let neighbor of state.neighbors){
+    let aux = border_list[`${neighbor}`]
+    if (aux.color == undefined) {
+      yield * percorre(aux.name, cores)
+    }
+  }
+
 }
 
 function hill(state) {
   console.log("============")
-  if (state.visited != false)
+  if (state.color != undefined)
     return;
   console.log("ESTADO ATUAL:", state)
-  state.visited = true
+  state.color = true
   let vizinhos = []
   state.neighbors.forEach(e => {
     vizinhos.push(border_list[`${e}`])
@@ -184,9 +210,17 @@ function hill(state) {
 
 }
 
+function reset(){
+  for (const value in border_list) {
+    setColor(border_list[value].name, defColor)
+    border_list[value].color = undefined
+  }
+  alert('finalizado')
+}
 export {
   percorre,
-  hill
+  hill,
+  reset
 }
 
 

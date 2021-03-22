@@ -1,10 +1,12 @@
 
 import srcBlocks from "./srcBlocks.js"
-import {percorre} from '../old/js/estados.js'
+import * as Player from "../old/js/player.js"
+import {percorre, reset} from '../old/js/estados.js'
+
+window.Player = Player
 
 const fade_duration = 0
 let colors = ["#fd9b70", "#84e2d2", "#ade09d", "#d08bec","#b6e600"];
-let defColor = '#dbcc72';
 let i = 0;
 let lockedColor = '#aaa';
 let remover_estados = false;
@@ -101,7 +103,10 @@ $(document).ready(async () => {
 		const button = $(this)
 		name = button.attr('alg-name')
 		await showAlg(name)
-		percorre('RS', "#AAA")
+		Player.setGenerator(percorre('SP', colors))
+		Player.addEndHandler(function() {
+			reset()
+		})
 	})
 	$('body').on('click', '#sair', async function(e) {
 		const button = $(this)
