@@ -1,7 +1,7 @@
 
 import srcBlocks from "./srcBlocks.js"
 import * as Player from "../old/js/player.js"
-import {percorre, reset} from '../old/js/estados.js'
+import {largura, hill, reset} from '../old/js/estados.js'
 
 window.Player = Player
 
@@ -71,7 +71,7 @@ function updateColors() {
 function putColors() {
 	const color_bar = $('#color_bar')
 	colors.forEach((color) => {
-		color_bar.append('<input type="color"/>')
+		color_bar.append('<input type="color" class="color_input" />')
 	})
 	color_bar.find('input').each(function(index){
 		const input = $(this)
@@ -103,7 +103,7 @@ $(document).ready(async () => {
 		const button = $(this)
 		name = button.attr('alg-name')
 		await showAlg(name)
-		Player.setGenerator(percorre('PR', colors))
+		Player.setGenerator(hill('AP', colors))
 		Player.addEndHandler(function() {
 			reset()
 			quitAlg()
