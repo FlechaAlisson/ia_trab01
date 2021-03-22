@@ -103,10 +103,12 @@ $(document).ready(async () => {
 		const button = $(this)
 		name = button.attr('alg-name')
 		await showAlg(name)
-		Player.setGenerator(percorre('SP', colors))
+		Player.setGenerator(percorre('PR', colors))
 		Player.addEndHandler(function() {
 			reset()
+			quitAlg()
 		})
+		Player.play()
 	})
 	$('body').on('click', '#sair', async function(e) {
 		const button = $(this)
@@ -156,6 +158,7 @@ $(document).ready(async () => {
 		estado_inicial = !estado_inicial;
 	});
 	$(".fa-play").click(function() {
+		Player.stop()
 		if(!play){
 			$(this).addClass("selected");
 			$(".fa-pause").css("display", "none");
@@ -170,6 +173,7 @@ $(document).ready(async () => {
 		play = !play;
 	});
 	$(".fa-pause").click(function() {
+		Player.play()
 		if(!pause){
 			$(this).addClass("selected");
 			$(".fa-pause").css("display", "inline");
@@ -184,6 +188,7 @@ $(document).ready(async () => {
 		pause = !pause;
 	});
 	$(".fa-home").click(function() {
+		Player.finish()
 		pause = false;
 		play = true;
 		$(".fa-play").css("display", "inline");

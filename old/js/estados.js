@@ -112,7 +112,7 @@ let border_list = {
   },
   SE: {
     name: "SE",
-    neighbors: ["BA", "SE"],
+    neighbors: ["BA","AL", "SE"],
     color: undefined
   },
   TO: {
@@ -152,19 +152,13 @@ function setColor(nome, cor) {
 
 
 function getCor(nome, cores) {
-  let coresRestantes = []
-  let state = buscaEstado(nome)
+    let state = buscaEstado(nome)
   state.neighbors.forEach(e => {
     let aux = border_list[`${e}`]
-    coresRestantes = cores.filter(c => {
-      return c != aux.color
-    })
+    cores = cores.filter(c => c !== aux.color  )
   });
-  return coresRestantes
-}
-
-function delay(ms) {
-  return new Promise((done) => setTimeout(done, ms));
+  
+  return cores
 }
 
 function * percorre(nome, cores) {

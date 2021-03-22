@@ -1,6 +1,6 @@
 let generator = null
 let done = false
-const interval = 100
+const interval = 500
 let intervalCode = null
 let endHandlers = []
 
