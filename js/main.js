@@ -103,7 +103,8 @@ $(document).ready(async () => {
 		const button = $(this)
 		name = button.attr('alg-name')
 		await showAlg(name)
-		Player.setGenerator(hill('AP', colors))
+		let colors_exec = [...colors]
+		Player.setGenerator(hill('AP', colors_exec))
 		Player.addEndHandler(function() {
 			reset()
 			quitAlg()
