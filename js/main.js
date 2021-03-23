@@ -104,7 +104,7 @@ $(document).ready(async () => {
 		name = button.attr('alg-name')
 		await showAlg(name)
 		let colors_exec = [...colors]
-		Player.setGenerator(hill('AP', colors_exec))
+		Player.setGenerator(largura('AP', colors_exec))
 		Player.addEndHandler(function() {
 			reset()
 			quitAlg()
@@ -145,6 +145,7 @@ $(document).ready(async () => {
 		mao_livre = !mao_livre;
 	});
 	$("#estado_inicial").click(function() {
+		
 		if(!estado_inicial){
 			$(this).addClass("selected");
 			$("#remover_estados").prop("disabled", true);
