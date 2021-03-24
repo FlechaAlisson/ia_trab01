@@ -1,8 +1,20 @@
-function buscaGulosa(estadoInicial, cores) {
-	coresPossiveis = cores;
-	forEach(estadoVizinho in estadoInicial){
-		coresPossiveis -= estadoVizinho.cor;		
-		estadoInicial.cor = random(coresPossiveis);
-		buscaGulosa(estadoVizinho, cores);
+function buscaCoresPossiveis(estadoAtual, cores){
+	coresPossiveis = []
+	for vizinho in estatoAtual.vizinho{
+		for cor in cores{
+			if(vizinho.cores != cor){
+				coresPossiveis.push(cor)
+			}
+		}
+	}
+	return coresPossiveis
+}
+function largura(estadoInicial, cores) {
+	coresPossiveis = buscaCoresPossiveis(estado, cores)
+	setCor(estadoInicial, coresPossiveis[0])
+	for vizinho in estatoAtual.vizinho{
+		if(vizinho.cor == null){
+			largura(vizinho, cores)
+		}
 	}
 }

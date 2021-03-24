@@ -1,4 +1,5 @@
 const defColor = '#dbcc72';
+let int_num = 0
 let border_list = {
   AC: {
     name: "AC",
@@ -22,7 +23,7 @@ let border_list = {
   },
   BA: {
     name: "BA",
-    neighbors: ["GO", "PI", "PE", "SE", "GO", "AL"],
+    neighbors: ["MG", "PI", "PE", "SE", "GO", "AL"],
     color: undefined
   },
   CE: {
@@ -154,7 +155,6 @@ function setColor(nome, cor) {
 
 function getCor(nome, cores) {
   let state = buscaEstado(nome)
-  console.log(state.neighbors)
   state.neighbors.forEach(e => {
     let aux = buscaEstado(e)
     cores = cores.filter(c => c !== aux.color)
@@ -164,6 +164,8 @@ function getCor(nome, cores) {
 }
 
 function* largura(nome, cores) {
+  int_num++
+  console.log(int_num);
   //Busca a instância do Estado
   const state = buscaEstado(nome)
   //Busca as cores possíveis
@@ -184,22 +186,22 @@ function* largura(nome, cores) {
 }
 
 function * hill(name, cores) {
+  int_num++
+  console.log(int_num);
   yield name
   let state = buscaEstado(name)
   if (state.color != undefined)
     return;
   let coresPossiveis = getCor(name, cores)
   setColor(state.name, coresPossiveis[0])
-  let vizinho = state.neighbors.reduce((a,b) => {
-    if(buscaEstado(b).neighbors.length < buscaEstado(a).neighbors.length
-      && buscaEstado(b).color === undefined)
-      a = b
-    if(buscaEstado(a).color !== undefined)
-      return b
-    return a
+  let neighbors = state.neighbors.sort((a,b) => {
+    return buscaEstado(b).neighbors.length - buscaEstado(a).neighbors.length
   })
-  console.log(vizinho)
-  yield* hill(vizinho,cores)
+  
+
+  for (const neighbor of neighbors) {
+    yield* hill(neighbor,cores)
+  }
 
 }
 
