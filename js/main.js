@@ -1,7 +1,7 @@
 
 import srcBlocks from "./srcBlocks.js"
 import * as Player from "../old/js/player.js"
-import {largura, hill, reset} from '../old/js/estados.js'
+import {largura, BuscaMenorConflito, reset} from '../old/js/estados.js'
 
 window.Player = Player
 
@@ -104,7 +104,7 @@ $(document).ready(async () => {
 		name = button.attr('alg-name')
 		await showAlg(name)
 		let colors_exec = [...colors]
-		Player.setGenerator(largura('AP', colors_exec))
+		Player.setGenerator(BuscaMenorConflito('AP', colors_exec))
 		Player.addEndHandler(function() {
 			reset()
 			quitAlg()

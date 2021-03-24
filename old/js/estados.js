@@ -185,7 +185,7 @@ function* largura(nome, cores) {
 
 }
 
-function * hill(name, cores) {
+function * BuscaMenorConflito(name, cores) {
   int_num++
   console.log(int_num);
   yield name
@@ -200,7 +200,7 @@ function * hill(name, cores) {
   
 
   for (const neighbor of neighbors) {
-    yield* hill(neighbor,cores)
+    yield* BuscaMenorConflito(neighbor,cores)
   }
 
 }
@@ -210,11 +210,10 @@ function reset() {
     setColor(border_list[value].name, defColor)
     border_list[value].color = undefined
   }
-  alert('finalizado')
 }
 export {
   largura,
-  hill,
+  BuscaMenorConflito,
   reset
 }
 

@@ -3,20 +3,24 @@ let done = false
 const interval = 500
 let intervalCode = null
 let endHandlers = []
+let startTime,endTime
 
 export function setGenerator(arg) {
+    startTime = new Date()
     generator = arg
     done = false
     endHandlers.length = 0
 }
 
 function handleEnd() {
+    endTime = new Date()
     done = true
     while (endHandlers.length) {
         const handler = endHandlers.splice(0, 1)[0]
         handler()
     }
     stop()
+    console.log((endTime - startTime) + " ms")
 }
 
 export function next() {
@@ -33,6 +37,7 @@ export function play() {
             stop()
         }
     }, interval)
+    
 }
 
 export function stop() {
