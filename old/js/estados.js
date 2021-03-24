@@ -186,12 +186,11 @@ function* largura(nome, cores) {
 }
 
 function * BuscaMenorConflito(name, cores) {
+  console.log(name);
   int_num++
   console.log(int_num);
   yield name
   let state = buscaEstado(name)
-  if (state.color != undefined)
-    return;
   let coresPossiveis = getCor(name, cores)
   setColor(state.name, coresPossiveis[0])
   let neighbors = state.neighbors.sort((a,b) => {
@@ -200,7 +199,8 @@ function * BuscaMenorConflito(name, cores) {
   
 
   for (const neighbor of neighbors) {
-    yield* BuscaMenorConflito(neighbor,cores)
+    if (buscaEstado(neighbor).color === undefined){
+      yield* BuscaMenorConflito(neighbor,cores)}
   }
 
 }
