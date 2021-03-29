@@ -1,7 +1,7 @@
 
 import srcBlocks from "./srcBlocks.js"
-import * as Player from "../old/js/player.js"
-import {largura, BuscaMenorConflito, reset} from '../old/js/estados.js'
+import * as Player from "./player.js"
+import {largura, BuscaMenorConflito, reset} from './algoritmos.js'
 
 window.Player = Player
 

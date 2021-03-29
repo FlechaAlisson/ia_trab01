@@ -1,10 +1,16 @@
-#include <stdio.h>
-
-int main(){
-    int i, vetor[10];
-	int controle=0;
-	for(i=0;i < 10;i++){
-		scanf("%d", &vetor[i]);
+function conflitosMinimos(estadoInicial, cores) {
+	// Checa as cores do vizinhos
+	// Se algum vizinho tiver uma cor, retira do vetor
+	coresPossiveis = buscaCoresPossiveis(estado, cores)
+	setCor(estadoInicial, coresPossiveis[0])
+	// Organiza o vetor de vizinhos de forma
+	// crescente baseado nos vizinhos dos
+	// elementos
+	vetorVizinho = estadoInicial.vizinhos
+	sort(vetorVizinho)
+	for vizinho in vetorVizinho{
+		if(vizinho.cor == null){
+			largura(vizinho, cores)
+		}
 	}
-	return 0;
 }
