@@ -33,10 +33,10 @@ function getPossibleColors(nome, cores) {
 	return cores
 }
 
-function* largura(nome, cores, lista_removido) {
+function* largura(nome, cores, lista_removido, textarea, src) {
 	var lista_not_pintados = [nome]
 	for (let i = 0; i < lista_not_pintados.length; i++) {
-		const cor = getCor(lista_not_pintados[i], cores)
+		const cor = getPossibleColors(lista_not_pintados[i], cores)
 		setColor(lista_not_pintados[i], cor[0])
 		yield lista_not_pintados[i]
 		buscaEstado(lista_not_pintados[i]).neighbors.forEach(element => {
@@ -51,13 +51,17 @@ function* largura(nome, cores, lista_removido) {
 }
 
 
-function * algoritmoC(name, cores, lista_removido) {
+function * algoritmoC(nome, cores, lista_removido, textarea, src) {
+	textarea.val( textarea.val() + "\n iteracao:" + int_num );
 	int_num++
 	console.log(int_num);
 	//Busca a instância do Estado
-	textarea.val( textarea.val() + "\n buscando:" + nome );
 	const state = buscaEstado(nome)
-	const cor = getCor(nome, cores)
+	textarea.val( textarea.val() + "\n achou:" + state.name );
+	//Busca as cores possíveis
+	const cor = getPossibleColors(nome, cores)
+	textarea.val( textarea.val() + "\n cores possiveis:" + cor );
+	//seta a cor
 	setColor(nome, cor[0])
 	textarea.val( textarea.val() + "\n pintando com:" + cor[0] );
 	//Para todo vizinho, chama recursivamente
@@ -74,7 +78,7 @@ function * algoritmoC(name, cores, lista_removido) {
 		// console.log("visitando " + nome)
 		let aux = border_list[`${neighbor}`]
 		if (!aux.color || aux.color == defColor) {
-			yield* largura(aux.name, cores, lista_removido, textarea, src)
+			yield* algoritmoC(aux.name, cores, lista_removido, textarea, src)
 		}
 	}
 }
@@ -110,9 +114,8 @@ function reset() {
 export {
 	largura,
 	BuscaMenorConflito,
+	algoritmoC,
 	reset,
-	setColor,
-	algoritmoC
 	setColor,
 	getColor
 }

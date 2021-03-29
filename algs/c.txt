@@ -1,14 +1,12 @@
 
-//revisar
-
-function largura(estadoInicial, cores) {
+function AlgoritmoC(estadoInicial, cores) {
 	// Checa as cores do vizinhos
 	// Se algum vizinho tiver uma cor, retira do vetor
 	coresPossiveis = buscaCoresPossiveis(estado, cores)
 	setCor(estadoInicial, coresPossiveis[0])
 	for vizinho in estatoAtual.vizinho{
 		if(vizinho.cor == null){
-			largura(vizinho, cores)
+			AlgoritmoC(vizinho, cores)
 		}
 	}
 }

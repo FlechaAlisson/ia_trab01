@@ -2,7 +2,7 @@
 import srcBlocks from "./srcBlocks.js"
 import * as Player from "./player.js"
 import {colors, defColor, lockedColor} from "./colors.js"
-import {largura, BuscaMenorConflito, reset, setColor, getColor} from './algoritmos.js'
+import {largura, BuscaMenorConflito, algoritmoC, reset, setColor, getColor} from './algoritmos.js'
 
 window.Player = Player
 
@@ -108,8 +108,10 @@ $(document).ready(async () => {
 		let colors_exec = [...colors]
 		if(name == "a"){
 			Player.setGenerator(largura(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
-		}else{
+		}else if(name == "b"){
 			Player.setGenerator(BuscaMenorConflito(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
+		}else if(name == "c"){
+			Player.setGenerator(algoritmoC(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
 		}
 		// Player.addEndHandler(function() {
 			// reset()
