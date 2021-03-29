@@ -24,7 +24,7 @@ function getColor(nome) {
 
 function getPossibleColors(nome, cores) {
 	let state = buscaEstado(nome)
-	console.log(state)
+	console.log(state);
 	state.neighbors.forEach(e => {
 		let aux = buscaEstado(e)
 		cores = cores.filter(c => c !== aux.color)
@@ -33,19 +33,31 @@ function getPossibleColors(nome, cores) {
 	return cores
 }
 
-function* largura(nome, cores, lista_removido, textarea, src) {
-	textarea.val( textarea.val() + "\n iteracao:" + int_num );
+function* largura(nome, cores, lista_removido) {
+	var lista_not_pintados = [nome]
+	for (let i = 0; i < lista_not_pintados.length; i++) {
+		const cor = getCor(lista_not_pintados[i], cores)
+		setColor(lista_not_pintados[i], cor[0])
+		yield lista_not_pintados[i]
+		buscaEstado(lista_not_pintados[i]).neighbors.forEach(element => {
+			if (buscaEstado(element).color == undefined &&
+			 !lista_not_pintados.includes(element) &&
+			 !lista_removido.includes(element)) {
+				lista_not_pintados.push(element)
+			}
+		});
 
+	}
+}
+
+
+function * algoritmoC(name, cores, lista_removido) {
 	int_num++
 	console.log(int_num);
 	//Busca a instância do Estado
 	textarea.val( textarea.val() + "\n buscando:" + nome );
 	const state = buscaEstado(nome)
-	textarea.val( textarea.val() + "\n achou:" + state );
-	//Busca as cores possíveis
-	const cor = getPossibleColors(nome, cores)
-	textarea.val( textarea.val() + "\n cores possiveis:" + cor );
-	//seta a cor
+	const cor = getCor(nome, cores)
 	setColor(nome, cor[0])
 	textarea.val( textarea.val() + "\n pintando com:" + cor[0] );
 	//Para todo vizinho, chama recursivamente
@@ -65,7 +77,6 @@ function* largura(nome, cores, lista_removido, textarea, src) {
 			yield* largura(aux.name, cores, lista_removido, textarea, src)
 		}
 	}
-
 }
 
 function * BuscaMenorConflito(name, cores, lista_removido, textarea, src) {
@@ -77,10 +88,10 @@ function * BuscaMenorConflito(name, cores, lista_removido, textarea, src) {
 	let coresPossiveis = getPossibleColors(name, cores)
 	setColor(state.name, coresPossiveis[0])
 	let neighbors = state.neighbors.sort((a,b) => {
-		return buscaEstado(b).neighbors.length - buscaEstado(a).neighbors.length
+		return buscaEstado(a).neighbors.length - buscaEstado(b).neighbors.length
 	})
 	
-
+	console.log(neighbors);
 	for (const neighbor of neighbors) {
 		var color = buscaEstado(neighbor).color
 		if (!color || color == defColor){
@@ -100,6 +111,8 @@ export {
 	largura,
 	BuscaMenorConflito,
 	reset,
+	setColor,
+	algoritmoC
 	setColor,
 	getColor
 }
