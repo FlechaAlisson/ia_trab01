@@ -43,6 +43,8 @@ function* largura(nome, cores, lista_removido, textarea, src) {
 		textarea.val(textarea.val() + "\nverificando:" + lista_not_pintados[i]);
 		textarea.val(textarea.val() + "\ncores possíveis:" + cor);
 		textarea.val(textarea.val() + "\ncor escolhida:" + cor[0]);
+		textarea.val(textarea.val() + "\niteracao:" + int_num);
+		int_num++
 		yield lista_not_pintados[i]
 		buscaEstado(lista_not_pintados[i]).neighbors.forEach(element => {
 			if (buscaEstado(element).color == undefined &&
@@ -57,7 +59,7 @@ function* largura(nome, cores, lista_removido, textarea, src) {
 
 
 function* algoritmoC(nome, cores, lista_removido, textarea, src) {
-	textarea.val(textarea.val() + "\nverificando:" + nome);
+	textarea.val(textarea.val() + "\n verificando:" + nome);
 	textarea.val(textarea.val() + "\n iteracao:" + int_num);
 	int_num++
 	console.log(int_num);
