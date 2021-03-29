@@ -2,21 +2,23 @@
 import srcBlocks from "./srcBlocks.js"
 import * as Player from "./player.js"
 import {colors, defColor, lockedColor} from "./colors.js"
-import {largura, BuscaMenorConflito, reset, setColor} from './algoritmos.js'
+import {largura, BuscaMenorConflito, reset, setColor, getColor} from './algoritmos.js'
 
 window.Player = Player
 
 let lista_removido = [];
+let selected_color = colors[0];
 const fade_duration = 0
 let i = 0;
 let remover_estados = false;
-let selected_color = colors[0];
 let mao_livre = false;
-let estado_inicial_nome = "";
 let estado_inicial = false;
 let play = true;
 let pause = false;
-let name;
+let estado_inicial_nome = "";
+
+let textarea, src, name;
+
 window.colors = colors
 
 const loadMap = async () => {
@@ -37,23 +39,13 @@ const hideSource = () => new Promise((done) => {
 })
 
 const showAlg = async (name) => {
-	const source = await $.get(`/algs/${name}.txt`)
+	src = await $.get(`/algs/${name}.txt`)
 	await hideMenu()
-	window.obj = srcBlocks(source, $('#source textarea'))
-	// 	.set({
-	// 		id: 1,
-	// 		first_line: 0,
-	// 		last_line: 3
-	// 	})
-	// 	.set({
-	// 		id: 2,
-	// 		first_line: 4,
-	// 		last_line: 5
-	// 	}).set({
-	// 		id: 3,
-	// 		first_line: 8,
-	// 		last_line: 9
-	// })
+	textarea = $('#source textarea')
+	
+	src = src.replace(/\r/g, '').trim()
+    textarea.val(src)
+
 	await showSource()
 }
 const quitAlg = async (name) => {
@@ -98,6 +90,10 @@ $(document).ready(async () => {
 	putColors()
 	updateColors()
 	await loadMap()
+
+	setColor("TO", colors[0])
+	estado_inicial_nome = "TO"
+
 	// await hideMenu()
 	// await showSource()
 	// await showAlg("a")
@@ -111,9 +107,9 @@ $(document).ready(async () => {
 		await showAlg(name)
 		let colors_exec = [...colors]
 		if(name == "a"){
-			Player.setGenerator(largura(estado_inicial_nome, colors_exec, lista_removido))
+			Player.setGenerator(largura(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
 		}else{
-			Player.setGenerator(BuscaMenorConflito(estado_inicial_nome, colors_exec, lista_removido))
+			Player.setGenerator(BuscaMenorConflito(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
 		}
 		// Player.addEndHandler(function() {
 			// reset()
@@ -229,7 +225,18 @@ $(document).ready(async () => {
 
 		if(mao_livre){
 			let estado = $(this).find('path').parent()[0].id;
-			setColor(estado, selected_color)
+
+			var cor_atual = getColor(estado)
+			// console.log("cor atual: " + getColor(estado))
+
+			if(cor_atual == undefined){
+				setColor(estado, selected_color)
+			}else if(cor_atual == defColor){
+				setColor(estado, selected_color)
+			}else if(cor_atual != defColor){
+				setColor(estado, defColor)
+			}
+			// console.log("cor que ficou: " + getColor(estado))
 		}
 
 		if(estado_inicial){
