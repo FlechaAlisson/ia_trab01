@@ -10,6 +10,7 @@ let lista_removido = [];
 const fade_duration = 0
 let i = 0;
 let remover_estados = false;
+let selected_color = colors[0];
 let mao_livre = false;
 let estado_inicial_nome = "";
 let estado_inicial = false;
@@ -135,6 +136,14 @@ $(document).ready(async () => {
 		}
 		remover_estados = !remover_estados;
 	});
+
+	$('body').on('click', 'input[type="color"]', function() {
+		var indice = [...$('input[type="color"]')].indexOf(this)
+
+		// console.log(indice)
+		selected_color = colors[indice]
+	})
+
 	$("#mao_livre").click(function() {
 		if(!mao_livre){
 			$(this).addClass("selected");
@@ -148,6 +157,10 @@ $(document).ready(async () => {
 			$(".alg").prop("disabled", false);
 		}
 		mao_livre = !mao_livre;
+
+
+		reset();
+		selected_color = colors[0]
 	});
 	$("#estado_inicial").click(function() {
 		
@@ -209,6 +222,11 @@ $(document).ready(async () => {
 
 	$('body').on('click', 'a', function() {
 
+
+		if(mao_livre){
+			let estado = $(this).find('path').parent()[0].id;
+			setColor(estado, selected_color)
+		}
 
 		if(estado_inicial){
 			let estado = $(this).find('path').parent()[0].id;
