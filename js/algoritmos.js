@@ -1,7 +1,7 @@
 
 import border_list from './estados.js'
 import { defColor } from "./colors.js"
-let int_num = 0
+// let iteracao = 0
 
 
 
@@ -33,7 +33,7 @@ function getPossibleColors(nome, cores) {
 	return cores
 }
 
-function* largura(nome, cores, lista_removido, textarea, src) {
+function* largura(nome, cores, lista_removido, textarea, src, iteracao) {
 	var lista_not_pintados = [nome]
 	for (let i = 0; i < lista_not_pintados.length; i++) {
 		const cor = getPossibleColors(lista_not_pintados[i], cores)
@@ -43,8 +43,8 @@ function* largura(nome, cores, lista_removido, textarea, src) {
 		textarea.val(textarea.val() + "\nverificando:" + lista_not_pintados[i]);
 		textarea.val(textarea.val() + "\ncores possíveis:" + cor);
 		textarea.val(textarea.val() + "\ncor escolhida:" + cor[0]);
-		textarea.val(textarea.val() + "\niteracao:" + int_num);
-		int_num++
+		textarea.val(textarea.val() + "\niteracao:" + iteracao);
+		iteracao++
 		yield lista_not_pintados[i]
 		buscaEstado(lista_not_pintados[i]).neighbors.forEach(element => {
 			if (buscaEstado(element).color == undefined &&
@@ -58,11 +58,11 @@ function* largura(nome, cores, lista_removido, textarea, src) {
 }
 
 
-function* algoritmoC(nome, cores, lista_removido, textarea, src) {
+function* algoritmoC(nome, cores, lista_removido, textarea, src, iteracao) {
 	textarea.val(textarea.val() + "\n verificando:" + nome);
-	textarea.val(textarea.val() + "\n iteracao:" + int_num);
-	int_num++
-	console.log(int_num);
+	textarea.val(textarea.val() + "\n iteracao:" + iteracao);
+	iteracao++
+	console.log(iteracao);
 	//Busca a instância do Estado
 	const state = buscaEstado(nome)
 	textarea.val(textarea.val() + "\n achou:" + state.name);
@@ -86,17 +86,17 @@ function* algoritmoC(nome, cores, lista_removido, textarea, src) {
 		// console.log("visitando " + nome)
 		let aux = border_list[`${neighbor}`]
 		if (!aux.color || aux.color == defColor) {
-			yield* algoritmoC(aux.name, cores, lista_removido, textarea, src)
+			yield* algoritmoC(aux.name, cores, lista_removido, textarea, src, iteracao)
 		}
 	}
 }
 
-function* BuscaMenorConflito(name, cores, lista_removido, textarea, src) {
+function* BuscaMenorConflito(name, cores, lista_removido, textarea, src, iteracao) {
 	textarea.val(textarea.val() + "\nverificando:" + name);
-	textarea.val(textarea.val() + "\n iteracao:" + int_num);
+	textarea.val(textarea.val() + "\n iteracao:" + iteracao);
 	console.log(name);
-	int_num++
-	console.log(int_num);
+	iteracao++
+	console.log(iteracao);
 	let state = buscaEstado(name)
 	textarea.val(textarea.val() + "\n achou:" + state.name);
 	let coresPossiveis = getPossibleColors(name, cores)
@@ -113,7 +113,7 @@ function* BuscaMenorConflito(name, cores, lista_removido, textarea, src) {
 		var color = buscaEstado(neighbor).color
 		if (!color || color == defColor) {
 			textarea.val(src);
-			yield* BuscaMenorConflito(neighbor, cores, lista_removido, textarea, src)
+			yield* BuscaMenorConflito(neighbor, cores, lista_removido, textarea, src, iteracao)
 		}
 	}
 

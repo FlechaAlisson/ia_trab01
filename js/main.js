@@ -107,11 +107,11 @@ $(document).ready(async () => {
 		await showAlg(name)
 		let colors_exec = [...colors]
 		if(name == "a"){
-			Player.setGenerator(largura(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
+			Player.setGenerator(largura(estado_inicial_nome, colors_exec, lista_removido, textarea, src, 0))
 		}else if(name == "b"){
-			Player.setGenerator(BuscaMenorConflito(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
+			Player.setGenerator(BuscaMenorConflito(estado_inicial_nome, colors_exec, lista_removido, textarea, src, 0))
 		}else if(name == "c"){
-			Player.setGenerator(algoritmoC(estado_inicial_nome, colors_exec, lista_removido, textarea, src))
+			Player.setGenerator(algoritmoC(estado_inicial_nome, colors_exec, lista_removido, textarea, src, 0))
 		}
 		// Player.addEndHandler(function() {
 			// reset()
