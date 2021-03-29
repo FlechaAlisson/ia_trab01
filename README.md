@@ -1,4 +1,4 @@
-### PROJETO I.A.
+### PROJETO 01 de I.A.
 
 Projeto 1 da matéria de Inteligência Artificial do ano de 2020/21. Integrantes:
 - Alisson Flecha;
