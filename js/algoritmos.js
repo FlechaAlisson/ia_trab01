@@ -52,6 +52,7 @@ function* largura(nome, cores, lista_removido, textarea, src) {
 
 
 function * algoritmoC(nome, cores, lista_removido, textarea, src) {
+	textarea.val( textarea.val() + "\nverificando:" + nome );
 	textarea.val( textarea.val() + "\n iteracao:" + int_num );
 	int_num++
 	console.log(int_num);
@@ -70,7 +71,7 @@ function * algoritmoC(nome, cores, lista_removido, textarea, src) {
 
 	for (let neighbor of state.neighbors) {
 
-		textarea.val( textarea.val() + "\n--- x ---\n verificando:" + nome );
+		textarea.val( src );
 		if(lista_removido.includes(nome)){
 			// console.log(nome + " ignorado")
 			continue;
