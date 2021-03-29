@@ -22,7 +22,7 @@ export default border_list = {
     },
     BA: {
       name: "BA",
-      neighbors: ["MG", "PI", "PE", "SE", "GO", "AL"],
+      neighbors: ["MG", "PI", "PE", "TO", "SE", "GO", "AL"],
       color: undefined
     },
     CE: {
