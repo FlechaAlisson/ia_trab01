@@ -101,6 +101,10 @@ $(document).ready(async () => {
 	// await showSource()
 	// await showAlg("a")
 	$('body').on('click', '.alg', async function(e) {
+		if (!estado_inicial_nome) {
+			alert("Selecione um estado inicial.")
+			return
+		}
 		const button = $(this)
 		name = button.attr('alg-name')
 		await showAlg(name)
