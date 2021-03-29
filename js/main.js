@@ -1,16 +1,17 @@
 
 import srcBlocks from "./srcBlocks.js"
 import * as Player from "./player.js"
-import {largura, BuscaMenorConflito, reset} from './algoritmos.js'
+import {colors, defColor, lockedColor} from "./colors.js"
+import {largura, BuscaMenorConflito, reset, setColor} from './algoritmos.js'
 
 window.Player = Player
 
+let lista_removido = [];
 const fade_duration = 0
-let colors = ["#fd9b70", "#84e2d2", "#ade09d", "#d08bec","#b6e600"];
 let i = 0;
-let lockedColor = '#aaa';
 let remover_estados = false;
 let mao_livre = false;
+let estado_inicial_nome = "";
 let estado_inicial = false;
 let play = true;
 let pause = false;
@@ -104,11 +105,15 @@ $(document).ready(async () => {
 		name = button.attr('alg-name')
 		await showAlg(name)
 		let colors_exec = [...colors]
-		Player.setGenerator(BuscaMenorConflito('AP', colors_exec))
-		Player.addEndHandler(function() {
-			reset()
-			quitAlg()
-		})
+		if(name == "a"){
+			Player.setGenerator(largura(estado_inicial_nome, colors_exec, lista_removido))
+		}else{
+			Player.setGenerator(BuscaMenorConflito(estado_inicial_nome, colors_exec, lista_removido))
+		}
+		// Player.addEndHandler(function() {
+			// reset()
+			// quitAlg()
+		// })
 		Player.play()
 	})
 	$('body').on('click', '#sair', async function(e) {
@@ -189,39 +194,79 @@ $(document).ready(async () => {
 		}
 		pause = !pause;
 	});
+	$(".fa-forward").click(function() {
+		Player.finish()
+	});
 	$(".fa-home").click(function() {
 		Player.finish()
 		pause = false;
 		play = true;
 		$(".fa-play").css("display", "inline");
 		$(".fa-pause").css("display", "none");
+		reset()
 		quitAlg(name)
 	});
 
-	// $('body').on('click', 'a', function() {
-	// 	if(!remover_estados){
-	// 		console.log({i})
-	// 		$(this).find('path').addClass("colored");
-	// 		$(this).find('path').css({
-	// 			fill: colors[i]
-	// 		})
-	// 		i ++
-	// 		i %= colors.length
-	// 	}else{
-	// 		let estado = $(this).find('path');
-	// 		if(!estado.hasClass("removido")){
-	// 			estado.addClass("removido")
-	// 			estado.css({
-	// 				fill: "#A9A9A9"
-	// 			})
-	// 		}else{
-	// 			estado.removeClass("removido")
-	// 			estado.css({
-	// 				fill: "#dbcc72"
-	// 			})
-	// 		}
-	// 	}
-	// })
+	$('body').on('click', 'a', function() {
+
+
+		if(estado_inicial){
+			let estado = $(this).find('path').parent()[0].id;
+			
+			if(estado_inicial_nome != ""){
+				setColor(estado_inicial_nome, defColor)
+			}
+	
+			if(lista_removido.includes(estado)){
+				setColor(estado, defColor);
+				var pos_estado = lista_removido.indexOf(estado);
+				lista_removido.splice(pos_estado, 1);
+			}
+
+			estado_inicial_nome = estado;
+			setColor(estado, colors[0])
+			$("#estado_inicial").click();
+		}
+
+		if(remover_estados){
+			let estado = $(this).find('path').parent()[0].id;
+
+			if(estado == estado_inicial_nome){
+				estado_inicial_nome = ""
+			}
+
+			if(lista_removido.includes(estado)){
+				setColor(estado, defColor);
+				var pos_estado = lista_removido.indexOf(estado);
+				lista_removido.splice(pos_estado, 1);
+			}else{
+				setColor(estado, lockedColor);
+				lista_removido.push(estado);
+			}
+		}
+
+		// if(!remover_estados){
+		// 	console.log({i})
+		// 	$(this).find('path').css({
+		// 		fill: colors[i]
+		// 	})
+		// 	i ++
+		// 	i %= colors.length
+		// }else{
+		// 	let estado = $(this).find('path');
+		// 	if(!estado.hasClass("removido")){
+		// 		estado.addClass("removido")
+		// 		estado.css({
+		// 			fill: "#A9A9A9"
+		// 		})
+		// 	}else{
+		// 		estado.removeClass("removido")
+		// 		estado.css({
+		// 			fill: "#dbcc72"
+		// 		})
+		// 	}
+		// }
+	})
 
 })
 
