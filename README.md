@@ -1,6 +1,8 @@
+##PROJETO I.A.
 Projeto 1 da matéria de Inteligência Artificial do ano de 2020/21. Integrantes:
 - Alisson Flecha;
 - Adrian Fuchs.
+
 Para executar o projeto, deve-se seguir os seguinte passos:
 - clonar o repositório
 - instalar o gerenciador de pacotes do Node.js em https://nodejs.org/en/download/
