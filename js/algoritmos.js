@@ -46,8 +46,13 @@ function* largura(nome, cores, lista_removido, textarea, src, iteracao) {
 		textarea.val(textarea.val() + "\niteracao:" + iteracao);
 		iteracao++
 		yield lista_not_pintados[i]
+		console.log(lista_not_pintados);
 		buscaEstado(lista_not_pintados[i]).neighbors.forEach(element => {
-			if (buscaEstado(element).color == undefined &&
+			if (element == "TO") {
+				console.log(buscaEstado(element).color);
+			}
+			if ((buscaEstado(element).color == undefined ||
+				buscaEstado(element).color == defColor)  &&
 				!lista_not_pintados.includes(element) &&
 				!lista_removido.includes(element)) {
 				lista_not_pintados.push(element)
