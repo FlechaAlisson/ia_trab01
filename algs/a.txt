@@ -1,15 +1,10 @@
-
-//revisar
-
 function largura(estadoInicial, cores) {
-	// Checa as cores do vizinhos
-	// Se algum vizinho tiver uma cor, retira do vetor
-	coresPossiveis = buscaCoresPossiveis(estado, cores)
-	setCor(estadoInicial, coresPossiveis[0])
-	for vizinho in estatoAtual.vizinho{
-		if(vizinho.cor == null){
-			largura(vizinho, cores)
-		}
+	estados = []
+	estados.push(estadoInicial)
+	for estado in estados{
+		coresPossiveis = buscaCoresPossiveis(cores)
+		setCor(estado, coresPossiveis[0])
+		estados.push(estado.vizinhos)
 	}
 }
 
